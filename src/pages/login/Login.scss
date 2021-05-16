@@ -1,0 +1,24 @@
+#login-page,
+#signup-page,
+#support-page {
+  ion-toolbar {
+    text-align: center;
+    & ion-title {
+      color: var(--ion-color-primary);
+      letter-spacing: 0.12rem;
+    }
+  }
+  h2 {
+    font-size: 2rem;
+    color: var(--ion-color-primary-shade);
+  }
+
+
+  .login-logo img {
+    max-width: 150px;
+  }
+
+  .list {
+    margin-bottom: 0;
+  }
+}
