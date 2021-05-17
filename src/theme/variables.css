@@ -22,11 +22,11 @@
 
 :root {
   /** primary **/
-  --ion-color-primary: #ffa824;
-  --ion-color-primary-rgb: 255, 168, 36;
+  --ion-color-primary: rgb(241, 147, 4);
+  --ion-color-primary-rgb: 241, 147, 4;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #c98115;
+  --ion-color-primary-shade: #be780f;
   --ion-color-primary-tint: #fab347;
 
   /** secondary **/
@@ -147,8 +147,10 @@
  * iOS only CSS variables can go here
  */
 
+/*
 .ios {
 }
+*/
 
 /*
  * App Material Design Variables
@@ -156,8 +158,9 @@
  * Material Design only CSS variables can go here
  */
 
+/*
 .md {
-}
+}*/
 
 /*
  * App Theme

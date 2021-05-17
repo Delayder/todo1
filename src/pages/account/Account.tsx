@@ -22,10 +22,6 @@ const Account: React.FC<AccountProps> = ({ setUsername, username }) => {
 
   const [showAlert, setShowAlert] = useState(false);
 
-  const clicked = (text: string) => {
-    console.log(`Clicked ${text}`);
-  }
-
   return (
     <IonPage id="account-page">
       <IonHeader>
@@ -43,10 +39,10 @@ const Account: React.FC<AccountProps> = ({ setUsername, username }) => {
             <img src="assets/img/speakers/puppy.jpg" alt="puppy" />
             <h2>{username}</h2>
             <IonList inset>
-              <IonItem onClick={() => clicked('Update Picture')}>Update Picture</IonItem>
-              <IonItem onClick={() => setShowAlert(true)}>Change Username</IonItem>
-              <IonItem onClick={() => clicked('Change Password')}>Change Password</IonItem>
-              <IonItem onClick={() => logout()} routerLink="/login" routerDirection="none">Logout</IonItem>
+              <IonItem button>Update Picture</IonItem>
+              <IonItem button onClick={() => setShowAlert(true)}>Change Username</IonItem>
+              <IonItem button>Change Password</IonItem>
+              <IonItem button onClick={() => logout()} routerLink="/login" routerDirection="none">Logout</IonItem>
             </IonList>
           </div>)
         }

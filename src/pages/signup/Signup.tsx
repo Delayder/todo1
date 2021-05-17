@@ -40,7 +40,6 @@ const Login: React.FC<LoginProps> = ({  history, setUsername: setUsernameAction 
       setPasswordError(true);
     }
 
-    const URL = "http://localhost:7002";
     const data = {
       name: {
         firstName: "Juano",
@@ -50,7 +49,7 @@ const Login: React.FC<LoginProps> = ({  history, setUsername: setUsernameAction 
       username,
       password
     }
-    fetch(`${URL}/api/auth/user`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/auth/user`, {
       method: 'POST',
       body: JSON.stringify(data),
       headers: { 'Content-Type': 'application/json' }

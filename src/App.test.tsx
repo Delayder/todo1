@@ -1,8 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import App from './App';
+import { createRenderer } from 'react-dom/test-utils';
 
-test('renders without crashing', () => {
-  const { baseElement } = render(<App />);
-  expect(baseElement).toBeDefined();
+test('Sign up create new user account', () => {
+  const component = createRenderer(
+
+  )
 });

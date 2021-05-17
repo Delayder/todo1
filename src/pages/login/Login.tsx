@@ -43,9 +43,10 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn, setMenuEnabled, history, s
     if (!password) {
       setPasswordError(true);
     }
-    const URL = "http://localhost:7002";
+
     const data = { username, password };
-    fetch(`${URL}/api/auth/login`, {
+
+    fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
       method: 'POST',
       body: JSON.stringify(data),
       headers: { 'Content-Type': 'application/json' }

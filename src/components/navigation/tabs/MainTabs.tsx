@@ -22,7 +22,7 @@ const MainTabs: React.FC<MainTabsProps> = () => {
         <Route path="/tabs/about" render={() => <About />} exact={true} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
-        <IonTabButton tab="sendMoney" href="/tabs/sendmoney">
+        <IonTabButton tab="sendMoney" href="/tabs/sendMoney">
           <IonIcon icon={paperPlane} />
 
         </IonTabButton>

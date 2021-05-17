@@ -80,7 +80,7 @@ small {
     width: 100%;
     height: 100%;
     background: linear-gradient(#e91e63, #ffc107);
-    clip-path: circle(75px at 90% center);
+    clip-path: circle(75px at 83% center);
   }
   &::before {
     content: "";
@@ -93,6 +93,6 @@ small {
       var(--ion-color-secondary-tint),
       var(--ion-color-tertiary)
     );
-    clip-path: circle(180px at 23% 95%);
+    clip-path: circle(180px at left 95%);
   }
 }

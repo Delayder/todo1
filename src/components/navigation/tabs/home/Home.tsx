@@ -16,7 +16,7 @@ const Home: React.FC<DarkModeButtonOptions> = ({ history }) => {
   const [money, setMoney]: any = useState('');
   const [QRvalue, setQRvalue] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const URL = "http://localhost:7002";
+
   const token = localStorage.getItem("_cap_TOKEN_AUTH");
   const decodedToken = parseJwt(token);
 
@@ -24,7 +24,7 @@ const Home: React.FC<DarkModeButtonOptions> = ({ history }) => {
     const getAccount = async () => {
       const res = await axios({
         method: 'GET',
-        url: `${URL}/api/userAccount/checking/${decodedToken._id}`,
+        url: `${process.env.REACT_APP_API_URL}/api/userAccount/checking/${decodedToken._id}`,
         headers: { "Content-Type": "application/json", "Authorization": JSON.parse(token || "") },
       });
       const data = res;
@@ -54,7 +54,8 @@ const Home: React.FC<DarkModeButtonOptions> = ({ history }) => {
       </IonHeader>
       <IonContent>
         <div className="dotted"></div>
-        <IonCard>
+        <IonCard className="ion-margin-top">
+          <div className="ball"></div>
           <IonCardHeader className="ion-text-center">
             <img src="assets/img/qrcode.webp" width="100"></img>
             <IonCardTitle className="ion-margin-top">Paga Con QR!</IonCardTitle>
