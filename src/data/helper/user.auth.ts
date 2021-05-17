@@ -16,8 +16,9 @@ const createAuthProvider = () => {
   };
 
   const logout = async () => {
-    tokenProvider.setToken({ accessToken: "" });
+    tokenProvider.setToken("");
     await Storage.remove({ key: USERNAME });
+    await Storage.remove({ key: HAS_LOGGED_IN });
   };
 
   const authFetch = async (
@@ -40,8 +41,8 @@ const createAuthProvider = () => {
     const [isLogged, setIsLogged] = useState(tokenProvider.isLoggedIn());
 
     useEffect(() => {
-      const listener = (newIsLogged: boolean) => {
-        setIsLogged(newIsLogged);
+      const listener = (isLogged: boolean) => {
+        setIsLogged(isLogged);
       };
 
       tokenProvider.subscribe(listener);
@@ -59,9 +60,9 @@ const createAuthProvider = () => {
       Storage.get({ key: HAS_SEEN_INTRO }),
       Storage.get({ key: USERNAME }),
     ]);
-    const isLoggedin = (response[0].value) === "true";
-    const hasSeenIntro = (response[1].value) === "true";
-    const username = (response[2].value) || undefined;
+    const isLoggedin = response[0].value === "true";
+    const hasSeenIntro = response[1].value === "true";
+    const username = response[2].value || undefined;
     const data = {
       isLoggedin,
       hasSeenIntro,

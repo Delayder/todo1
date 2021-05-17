@@ -1,0 +1,32 @@
+{
+  "appId": "io.ionic.todo1",
+  "appName": "todo1",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "build",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {
+    "preferences": {
+      "ScrollEnabled": "false",
+      "StatusBarBackgroundColor": "#472C85",
+      "android-minSdkVersion": "29",
+      "BackupWebStorage": "none",
+      "SplashMaintainAspectRatio": "true",
+      "FadeSplashScreen": "false",
+      "FadeSplashScreenDuration": "0",
+      "SplashShowOnlyFirstTime": "false",
+      "ShowSplashScreenSpinner": "true",
+      "SplashScreen": "screen",
+      "SplashScreenDelay": "0",
+      "AutoHideSplashScreen": "false",
+      "AndroidLaunchMode": "singleTask",
+      "orientation": "portrait",
+      "cryptoPort": "8080",
+      "KeyboardDisplayRequiresUserAction": "false"
+    }
+  }
+}

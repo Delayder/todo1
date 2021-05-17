@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IonContent, IonPage, IonRow, IonCol, IonButton, IonList, IonItem, IonLabel, IonInput, IonText, useIonAlert } from '@ionic/react';
+import { IonContent, IonPage, IonRow, IonCol, IonButton, IonList, IonItem, IonLabel, IonInput, IonText, useIonAlert, IonGrid } from '@ionic/react';
 import { setIsLoggedIn, setUsername } from '../../data/user/user.actions';
 import { connect } from '../../data/connect';
 import { RouteComponentProps } from 'react-router';
@@ -80,50 +80,53 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn, history, setUsername: setU
   return (
     <IonPage id="signup-page">
       <IonContent>
-        <div className="container__head">
-          <h2>Sign Up</h2>
-          <DarkMode slot="end"></DarkMode>
-        </div>
-
         <form noValidate onSubmit={login}>
-          <IonList>
-            <IonItem>
-              <IonLabel position="stacked" color="primary">Username</IonLabel>
-              <IonInput name="username" type="text" value={username} spellCheck={false} autocapitalize="off" onIonChange={e => {
-                setUsername(e.detail.value!);
-                setUsernameError(false);
-              }}
-                required>
-              </IonInput>
-            </IonItem>
+          <div className="container__head">
+            <h3>Todo1</h3>
+            <DarkMode slot="end"></DarkMode>
+          </div>
 
-            {formSubmitted && usernameError && <IonText color="danger">
-              <p className="ion-padding-start">
-                Username is required
+          <IonGrid>
+            <IonRow className="ion-justify-content-center ion-align-items-center ion-margin-top">
+            <h1>Crear cuenta</h1>
+              <IonCol size="12">
+                <IonItem>
+                  <IonLabel position="stacked" color="secondary">Username</IonLabel>
+                  <IonInput name="username" type="text" value={username} spellCheck={false} autocapitalize="off" onIonChange={e => {
+                    setUsername(e.detail.value!);
+                    setUsernameError(false);
+                  }}
+                    required>
+                  </IonInput>
+                </IonItem>
+              </IonCol>
+
+              {formSubmitted && usernameError && <IonText color="danger">
+                <p className="ion-padding-start">
+                  Username is required
               </p>
-            </IonText>}
+              </IonText>}
+              <IonCol size="12">
+                <IonItem>
+                  <IonLabel position="stacked" color="secondary">Password</IonLabel>
+                  <IonInput name="password" type="password" value={password} onIonChange={e => {
+                    setPassword(e.detail.value!);
+                    setPasswordError(false);
+                  }}>
+                  </IonInput>
+                </IonItem>
 
-            <IonItem>
-              <IonLabel position="stacked" color="primary">Password</IonLabel>
-              <IonInput name="password" type="password" value={password} onIonChange={e => {
-                setPassword(e.detail.value!);
-                setPasswordError(false);
-              }}>
-              </IonInput>
-            </IonItem>
-
-            {formSubmitted && passwordError && <IonText color="danger">
-              <p className="ion-padding-start">
-                Password is required
+                {formSubmitted && passwordError && <IonText color="danger">
+                  <p className="ion-padding-start">
+                    Password is required
               </p>
-            </IonText>}
-          </IonList>
+                </IonText>}
+              </IonCol>
+            </IonRow>
 
-          <IonRow>
-            <IonCol>
-              <IonButton type="submit" expand="block">Create</IonButton>
-            </IonCol>
-          </IonRow>
+            <IonButton type="submit" color="secondary" expand="block">Crear Cuenta</IonButton>
+            <IonButton routerLink="/login" color="secondary" className="ion-margin-top" fill="clear" expand="block">Regresar</IonButton>
+          </IonGrid>
         </form>
 
       </IonContent>

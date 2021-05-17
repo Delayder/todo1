@@ -1,9 +1,11 @@
 {
-  "name": "test",
+  "name": "todo1",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@capacitor/core": "^2.4.7",
+    "@capacitor/android": "^2.4.7",
+    "@capacitor/core": "2.4.7",
+    "@ionic-native/qr-scanner": "^5.33.0",
     "@ionic/react": "^5.5.0",
     "@ionic/react-router": "^5.5.0",
     "@testing-library/jest-dom": "^5.11.9",
@@ -15,6 +17,9 @@
     "@types/react-dom": "^16.9.10",
     "@types/react-router": "^5.1.11",
     "@types/react-router-dom": "^5.1.7",
+    "cordova-plugin-device": "^2.0.3",
+    "cordova-plugin-ios-camera-permissions": "^1.2.0",
+    "cordova.plugins.diagnostic": "^6.0.3",
     "dotenv": "^9.0.2",
     "ionicons": "^5.4.0",
     "node-sass": "^6.0.0",
@@ -67,6 +72,28 @@
   },
   "description": "An Ionic project",
   "devDependencies": {
+    "@capacitor/cli": "2.4.7",
     "@ionic/lab": "3.2.10"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-device": {},
+      "cordova-plugin-ionic-keyboard": {},
+      "cordova.plugins.diagnostic": {
+        "ANDROID_SUPPORT_VERSION": "28.+"
+      },
+      "cordova-plugin-ios-camera-permissions": {
+        "CAMERA_USAGE_DESCRIPTION": "Esta aplicación requiere acceso a la cámara para escanear códigos QR!",
+        "MICROPHONE_USAGE_DESCRIPTION": "Esta app Requiere permisos para acceder a tú micrófono!",
+        "PHOTOLIBRARY_ADD_USAGE_DESCRIPTION": "Esta app, Requiere permisos de lectura, a tu galeria de imagenes!",
+        "PHOTOLIBRARY_USAGE_DESCRIPTION": "Esta app, Requiere permisos de lectura y guardado en tu galeria de imagenes!"
+      },
+      "cordova-plugin-prevent-screenshot": {}
+    },
+    "platforms": [
+      "browser",
+      "android",
+      "ios"
+    ]
   }
 }

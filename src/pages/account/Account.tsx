@@ -29,17 +29,18 @@ const Account: React.FC<AccountProps> = ({ setUsername, username }) => {
   return (
     <IonPage id="account-page">
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar color="secondary">
           <IonButtons slot="start">
             <IonMenuButton></IonMenuButton>
           </IonButtons>
-          <IonTitle>Account</IonTitle>
+          <IonTitle>Configurar Perfil</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
         {username &&
           (<div className="ion-padding-top ion-text-center">
-            <img src="https://www.gravatar.com/avatar?d=mm&s=140" alt="avatar" />
+            {/*<img src="https://www.gravatar.com/avatar?d=mm&s=140" alt="avatar" />*/}
+            <img src="assets/img/speakers/puppy.jpg" alt="puppy" />
             <h2>{username}</h2>
             <IonList inset>
               <IonItem onClick={() => clicked('Update Picture')}>Update Picture</IonItem>

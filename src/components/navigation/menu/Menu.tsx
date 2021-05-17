@@ -2,13 +2,14 @@ import React from 'react';
 import { RouteComponentProps, withRouter, useLocation } from 'react-router';
 
 import { IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonToggle } from '@ionic/react';
-import { hammer, moonOutline } from 'ionicons/icons';
+import { logOut, moonOutline } from 'ionicons/icons';
 
 import { connect } from '../../../data/connect';
 import { setDarkMode } from '../../../data/user/user.actions';
 
 import './Menu.scss';
 import routes from '../../../routes';
+import { logout } from '../../../data/helper/user.auth';
 interface Pages {
   title: string,
   path: string,
@@ -26,7 +27,7 @@ interface DispatchProps {
 
 interface MenuProps extends RouteComponentProps, StateProps, DispatchProps { }
 
-const Menu: React.FC<MenuProps> = ({ darkMode, history, isAuthenticated, setDarkMode, menuEnabled }) => {
+const Menu: React.FC<MenuProps> = ({ darkMode, isAuthenticated, setDarkMode, menuEnabled }) => {
   const location = useLocation();
 
   function renderlistItems(list: Pages[]) {
@@ -34,8 +35,8 @@ const Menu: React.FC<MenuProps> = ({ darkMode, history, isAuthenticated, setDark
       .filter(route => !!route.path)
       .map(p => (
         <IonMenuToggle key={p.title} auto-hide="false">
-          <IonItem detail={false} routerLink={p.path} routerDirection="none" className={`ion-margin-top ${location.pathname.startsWith(p.path) ? 'selected' : undefined}`}>
-            <IonIcon slot="start" icon={p.icon} />
+          <IonItem detail={false} routerLink={p.path} routerDirection="none" className={`ion-margin-left ion-margin-top ${location.pathname.startsWith(p.path) ? 'selected' : undefined}`}>
+            <IonIcon slot="start" className="ion-padding-right" icon={p.icon} />
             <IonLabel>{p.title}</IonLabel>
           </IonItem>
         </IonMenuToggle>
@@ -53,20 +54,15 @@ const Menu: React.FC<MenuProps> = ({ darkMode, history, isAuthenticated, setDark
           <IonList lines="none">
             <IonListHeader>Account</IonListHeader>
             {renderlistItems(routes.loggedInPages)}
+            <IonItem onClick={() => logout()} routerLink="/login" className="ion-margin-top">
+              <IonIcon slot="start" icon={logOut}></IonIcon>
+              <IonLabel>Cerrar Sesión</IonLabel>
+            </IonItem>
             <IonItem className="ion-margin-top">
-              <IonIcon slot="start"  icon={moonOutline}></IonIcon>
-              <IonLabel>Dark Mode</IonLabel>
+              <IonIcon slot="start" icon={moonOutline}></IonIcon>
+              <IonLabel>Modo Oscuro</IonLabel>
               <IonToggle checked={darkMode} onClick={() => setDarkMode(!darkMode)} />
             </IonItem>
-          </IonList>
-          <IonList lines="none">
-            <IonListHeader>Intro</IonListHeader>
-            <IonItem button onClick={() => {
-              history.push('/intro');
-            }}>
-              <IonIcon slot="start" icon={hammer} />
-            Show Intro
-          </IonItem>
           </IonList>
         </IonContent>
       </>

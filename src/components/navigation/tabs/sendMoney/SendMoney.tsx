@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IonHeader, IonToolbar, IonContent, IonPage, IonButtons, IonMenuButton } from '@ionic/react';
+import { IonHeader, IonToolbar, IonContent, IonPage, IonButtons, IonMenuButton, IonTitle } from '@ionic/react';
 
 import './SendMoney.scss';
 interface SendMoneyProps { }
@@ -10,10 +10,11 @@ const SendMoney: React.FC<SendMoneyProps> = () => {
     <IonPage id="SendMoney-page">
       <IonContent>
         <IonHeader className="ion-no-border">
-          <IonToolbar>
+          <IonToolbar color="tertiary">
             <IonButtons slot="start">
               <IonMenuButton></IonMenuButton>
             </IonButtons>
+            <IonTitle>Enviar dinero</IonTitle>
           </IonToolbar>
         </IonHeader>
 

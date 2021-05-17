@@ -8,7 +8,6 @@ import { setMenuEnabled } from '../../data/sessions/sessions.actions';
 import DarkMode from '../../components/buttons/DarkMode';
 import { config } from '../../config';
 import { createTokenProvider } from '../../data/helper/user.token';
-import { generateLogin } from '../../data/helper/user.auth';
 interface OwnProps extends RouteComponentProps { }
 
 interface DispatchProps {
@@ -51,9 +50,9 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn, setMenuEnabled, history, s
       const { token, message } = await res.json();
       if (token) {
         setUsernameAction(username);
-        //generateLogin(token);
         setIsLoggedIn(true);
         setMenuEnabled(true);
+        tokenProvider.setToken(token);
         history.push('/tabs/home', { direction: 'none' });
       } else {
         present({

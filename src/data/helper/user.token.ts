@@ -1,5 +1,9 @@
+import { Plugins } from "@capacitor/core";
+
+const { Storage } = Plugins;
+
 export const createTokenProvider = () => {
-  let _token: { accessToken: string }
+  let _token: any = localStorage.getItem("TOKEN_AUTH");
 
   const getToken = async () => {
     if (!_token) {
@@ -28,9 +32,9 @@ export const createTokenProvider = () => {
 
   const setToken = (token: typeof _token) => {
     if (token) {
-      localStorage.setItem("REACT_TOKEN_AUTH", JSON.stringify(token));
+      Storage.set({ key: "TOKEN_AUTH", value: JSON.stringify(token) });
     } else {
-      localStorage.removeItem("REACT_TOKEN_AUTH");
+      Storage.remove({ key: "TOKEN_AUTH" });
     }
     _token = token;
     notify();

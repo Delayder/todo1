@@ -78,9 +78,15 @@ ion-menu.md ion-list:not(:last-of-type) {
 */
 ion-menu.ios ion-list-header {
   padding-left: 16px;
-  padding-right: 16px;
 
+  text-transform: uppercase;
+  font-weight: 450;
   margin-bottom: 8px;
+}
+
+ion-list-header::before {
+  width: 50%;
+  top: 1.25rem;
 }
 
 ion-menu.ios ion-list {

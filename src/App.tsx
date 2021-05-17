@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route } from 'react-router-dom';
+import { Redirect } from 'react-router';
 import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 
@@ -70,9 +71,9 @@ const IonicApp: React.FC<IonicAppProps> = ({ darkMode, setIsLoggedIn, setUsernam
 
   return (
     <IonApp className={`${darkMode ? 'dark-theme' : 'light-theme'}`}>
-      <IonReactRouter>
-        <IonSplitPane contentId="main">
-          {!logged && <>
+      {!logged ? <>
+        <IonReactRouter>
+          <IonSplitPane contentId="main">
             <Menu />
             <IonRouterOutlet id="main">
               <Route path="/tabs" render={() => <MainTabs />} />
@@ -88,10 +89,10 @@ const IonicApp: React.FC<IonicAppProps> = ({ darkMode, setIsLoggedIn, setUsernam
               }} />
               <Route path="/" component={HomeOrIntro} exact />
             </IonRouterOutlet>
-          </>
-          }
-        </IonSplitPane>
-      </IonReactRouter>
+          </IonSplitPane>
+        </IonReactRouter>
+      </>
+        : <Redirect to="/login" />}
     </IonApp>
   )
 }

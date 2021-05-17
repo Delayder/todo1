@@ -319,6 +319,7 @@
   --ion-tab-bar-background: #1f1f1f;
 }
 .light-theme.md {
+  --ion-background-color: #f4f4f4;
   --ion-intro-background-color: #fce6c1;
   --ion-background-color-rgb: 0, 0, 0;
 }

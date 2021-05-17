@@ -6,9 +6,11 @@
     margin-top: 2.8rem;
     letter-spacing: 0.15rem;
     color: var(--ion-color-medium);
+    text-transform: uppercase;
   }
   h2 {
     font-size: 1.5rem;
+    text-transform: uppercase;
     color: var(--ion-color-primary);
     &::before {
       content: "";
@@ -19,6 +21,22 @@
       width: 8rem;
       border-radius: 0 1.5625rem 1.5625rem 0;
       background: var(--ion-color-primary-shade);
+      z-index: -1;
+    }
+  }
+  h3 {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    color: var(--ion-color-secondary-tint);
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0.5rem;
+      left: 0;
+      height: 3.125rem;
+      width: 8rem;
+      border-radius: 0 1.5625rem 1.5625rem 0;
+      background: var(--ion-color-secondary-shade);
       z-index: -1;
     }
   }
