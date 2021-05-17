@@ -30,7 +30,10 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn, setMenuEnabled, history, s
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-
+  const resetForm = () =>{
+    setUsername('');
+    setPassword('');
+  }
   const login = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormSubmitted(true);
@@ -84,7 +87,7 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn, setMenuEnabled, history, s
               <h1>INICIO SESIÓN</h1>
               <IonCol size="12">
                 <IonItem>
-                  <IonLabel position="floating" color="medium">Alias</IonLabel>
+                  <IonLabel position="floating" color="medium">ALIAS</IonLabel>
                   <IonInput name="username" type="text" value={username} spellCheck={false} autocapitalize="off" onIonChange={e => setUsername(e.detail.value!)}
                     required>
                   </IonInput>
@@ -98,7 +101,7 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn, setMenuEnabled, history, s
 
               <IonCol size="12">
                 <IonItem>
-                  <IonLabel position="floating" color="medium">Contraseña</IonLabel>
+                  <IonLabel position="floating" color="medium">CONTRASEÑA</IonLabel>
                   <IonInput name="password" color="primary" type="password" value={password} onIonChange={e => setPassword(e.detail.value!)}>
                   </IonInput>
                 </IonItem>
@@ -111,8 +114,8 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn, setMenuEnabled, history, s
               </IonCol>
 
             </IonRow>
-            <IonButton type="submit" expand="block" shape="round" color="primary">Iniciar Sesión</IonButton>
-            <IonButton routerLink="/signup" color="transparent" className="ion-margin-top" fill="clear" expand="block">Crea tu cuenta!</IonButton>
+            <IonButton type="submit" onClick={() => { resetForm() }} expand="block" shape="round" color="primary">Iniciar Sesión</IonButton>
+            <IonButton routerLink="/signup" onClick={() => resetForm()} color="transparent" className="ion-margin-top" fill="clear" expand="block">Crea tu cuenta!</IonButton>
           </IonGrid>
         </form>
       </IonContent>

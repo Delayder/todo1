@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { RouteComponentProps, withRouter, useLocation } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router';
 
-import { IonButton, IonButtons, IonHeader, IonIcon, IonMenu, IonToolbar } from '@ionic/react';
+import { IonButton, IonButtons, IonHeader, IonMenu, IonToolbar } from '@ionic/react';
 
 import { connect } from '../../../data/connect';
 import { setHasSeenIntro } from '../../../data/user/user.actions';
@@ -24,7 +24,6 @@ const Menu: React.FC<MenuProps> = ({ darkMode, history }) => {
     await setMenuEnabled(true);
     history.push('/login', { direction: 'none' });
   };
-  const location = useLocation();
 
   return (
     <IonMenu type="overlay" contentId="main">

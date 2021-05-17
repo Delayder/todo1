@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IonContent, IonPage, IonRow, IonCol, IonButton, IonList, IonItem, IonLabel, IonInput, IonText, useIonAlert, IonGrid } from '@ionic/react';
+import { IonContent, IonPage, IonRow, IonCol, IonButton, IonItem, IonLabel, IonInput, IonText, useIonAlert, IonGrid } from '@ionic/react';
 import { setIsLoggedIn, setUsername } from '../../data/user/user.actions';
 import { connect } from '../../data/connect';
 import { RouteComponentProps } from 'react-router';
@@ -16,7 +16,7 @@ interface DispatchProps {
 
 interface LoginProps extends OwnProps, DispatchProps { }
 
-const Login: React.FC<LoginProps> = ({ setIsLoggedIn, history, setUsername: setUsernameAction }) => {
+const Login: React.FC<LoginProps> = ({  history, setUsername: setUsernameAction }) => {
   const [present] = useIonAlert();
 
   const [username, setUsername] = useState('');
@@ -24,6 +24,11 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn, history, setUsername: setU
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+
+  const resetForm = () =>{
+    setUsername('');
+    setPassword('');
+  }
 
   const login = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,6 +46,7 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn, history, setUsername: setU
         firstName: "Juano",
         lastName: "Martinez"
       },
+      nickname: "Account" + Math.floor(Math.random() * 10),
       username,
       password
     }
@@ -48,33 +54,29 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn, history, setUsername: setU
       method: 'POST',
       body: JSON.stringify(data),
       headers: { 'Content-Type': 'application/json' }
-    }).then(res => {
-      console.log(res)
-      if (username && password) {
-        setIsLoggedIn(true);
-        setUsernameAction(username);
-        history.push('/tabs/home', { direction: 'none' });
+    }).then(async (res) => {
+      const { user, message } = await res.json();
+      if (user.status && user.status === 200) {
+        present({
+          animated: true,
+          header: 'Cuenta Creada!',
+          message: user.message,
+          buttons: [
+            'Ok'
+          ],
+        })
+        history.push('/login', { direction: 'none' });
+      } else {
+        present({
+          animated: true,
+          header: 'Uy, Hubo un error!',
+          message: message,
+          buttons: [
+            'Ok'
+          ],
+        })
       }
-    }).catch((err) => {
-      present({
-        cssClass: 'my-css',
-        header: 'Alert',
-        message: err.message,
-        buttons: [
-          'Cancel',
-          { text: 'Ok', handler: (d) => console.log('ok pressed') },
-        ],
-        onDidDismiss: (e) => console.log('did dismiss'),
-      })
-
-      console.log("ERROR", err)
     })
-
-    if (username && password) {
-      await setIsLoggedIn(true);
-      await setUsernameAction(username);
-      history.push('/tabs/home', { direction: 'none' });
-    }
   };
 
   return (
@@ -88,10 +90,10 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn, history, setUsername: setU
 
           <IonGrid>
             <IonRow className="ion-justify-content-center ion-align-items-center ion-margin-top">
-            <h1>Crear cuenta</h1>
+              <h1>Crear cuenta</h1>
               <IonCol size="12">
                 <IonItem>
-                  <IonLabel position="stacked" color="secondary">Username</IonLabel>
+                  <IonLabel position="floating" color="medium">ALIAS</IonLabel>
                   <IonInput name="username" type="text" value={username} spellCheck={false} autocapitalize="off" onIonChange={e => {
                     setUsername(e.detail.value!);
                     setUsernameError(false);
@@ -103,13 +105,13 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn, history, setUsername: setU
 
               {formSubmitted && usernameError && <IonText color="danger">
                 <p className="ion-padding-start">
-                  Username is required
+                  Se requiere un Alias
               </p>
               </IonText>}
               <IonCol size="12">
                 <IonItem>
-                  <IonLabel position="stacked" color="secondary">Password</IonLabel>
-                  <IonInput name="password" type="password" value={password} onIonChange={e => {
+                  <IonLabel position="floating" color="medium">CONTRASEÑA</IonLabel>
+                  <IonInput name="password" type="password" color="secondary" value={password} onIonChange={e => {
                     setPassword(e.detail.value!);
                     setPasswordError(false);
                   }}>
@@ -118,14 +120,14 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn, history, setUsername: setU
 
                 {formSubmitted && passwordError && <IonText color="danger">
                   <p className="ion-padding-start">
-                    Password is required
+                    La contraseña es requerida
               </p>
                 </IonText>}
               </IonCol>
             </IonRow>
 
-            <IonButton type="submit" color="secondary" expand="block">Crear Cuenta</IonButton>
-            <IonButton routerLink="/login" color="secondary" className="ion-margin-top" fill="clear" expand="block">Regresar</IonButton>
+            <IonButton type="submit" onClick={() => { resetForm() }} color="secondary" expand="block">Crear Cuenta</IonButton>
+            <IonButton routerLink="/login" onClick={() => { resetForm() }} color="secondary" className="ion-margin-top" fill="clear" expand="block">Regresar</IonButton>
           </IonGrid>
         </form>
 

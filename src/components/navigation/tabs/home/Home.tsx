@@ -1,27 +1,42 @@
 import React, { useEffect, useState } from 'react';
-import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonMenuButton, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonList, IonMenuButton, IonModal, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import { RouteComponentProps, withRouter } from 'react-router';
-import { QRScanner } from '@ionic-native/qr-scanner';
 
 import { connect } from '../../../../data/connect';
-import { authFetch } from '../../../../data/helper/user.auth';
-
 import "./Home.scss";
 import { bagHandleOutline, cashOutline, helpCircle, walletOutline } from 'ionicons/icons';
+import { parseJwt } from '../../../../data/helper/auth.helper';
 
+import axios from "axios";
 interface DarkModeButtonOptions extends RouteComponentProps { };
 
 const Home: React.FC<DarkModeButtonOptions> = ({ history }) => {
-  const [account, setAccount] = useState([]);
+  const [account, setAccount]: any = useState([]);
+  const [currency, setCurrency]: any = useState('');
+  const [money, setMoney]: any = useState('');
   const [QRvalue, setQRvalue] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const URL = "http://localhost:7002";
+  const token = localStorage.getItem("_cap_TOKEN_AUTH");
+  const decodedToken = parseJwt(token);
 
   useEffect(() => {
-    authFetch('').then(r => r.json()).then(_post => setAccount(_post));
-  });
+    const getAccount = async () => {
+      const res = await axios({
+        method: 'GET',
+        url: `${URL}/api/userAccount/checking/${decodedToken._id}`,
+        headers: { "Content-Type": "application/json", "Authorization": JSON.parse(token || "") },
+      });
+      const data = res;
+      setAccount(data.data);
+      const { currency, balance } = data.data.money;
+      setMoney(balance);
+      setCurrency(currency);
+    }
+    getAccount();
 
-  const generateQR = () =>{
+  }, [!account.money]);
 
-  }
   return (
     <IonPage id="home-page">
       <IonHeader>
@@ -53,22 +68,50 @@ const Home: React.FC<DarkModeButtonOptions> = ({ history }) => {
                 <IonIcon inputMode="numeric" icon={walletOutline}></IonIcon>
               </IonInput>
             </IonItem>
-            <IonButton type="submit" expand="block" shape="round" className="ion-margin-top" color="primary" onClick={() => {generateQR()}}>Generar Codigo QR</IonButton>
+            <IonButton type="submit" expand="block" shape="round" className="ion-margin-top" color="primary" onClick={() => { }}>Generar Codigo QR</IonButton>
           </IonCardContent>
         </IonCard>
 
         <IonRow>
           <IonCol className="ion-padding-start" size="12">
             <h2>Mis cuentas</h2>
+            <IonButton className="ion-margin-top" color="secondary" fill="outline" onClick={() => setShowModal(true)}>{account.nickname}</IonButton>
+            <IonModal isOpen={showModal} cssClass='my-custom-class'>
+              <IonHeader translucent>
+                <IonToolbar color="primary">
+                  <IonTitle color="dark">Tu cuenta {account.nickname}</IonTitle>
+                  <IonButtons slot="end">
+                    <IonButton onClick={() => setShowModal(false)} color="dark" fill="outline" shape="round">Close</IonButton>
+                  </IonButtons>
+                </IonToolbar>
+              </IonHeader>
+              <IonContent fullscreen>
+                <div className="ball"></div>
+                <IonList>
+                  <IonItem>
+                    <IonAvatar slot="start">
+                      <IonImg src="assets/img/speakers/puppy.jpg" />
+                    </IonAvatar>
+                    <IonLabel color="dark">
+                      <h2>Número: <strong>{account.accountNumber}</strong></h2>
+                      <p>CC: <strong>{account.userCredential}</strong></p>
+                      <p>Tipo: <strong>{account.accountType === 1 ? 'Ahorros' : 'Corriente'}</strong></p>
+                      <p>Banco: <strong>{account.entity}</strong></p>
+                      <IonCardSubtitle color="secondary">Creada: {account.createdAt}</IonCardSubtitle>
+                    </IonLabel>
+                  </IonItem>
+                </IonList>
+              </IonContent>
+            </IonModal>
           </IonCol>
           <IonCol size="6" sizeXs="12">
-            <IonCard >
-              <IonCardContent className="card-dot">
+            <IonCard className="ion-margin-top" disabled={account.accountType !== 1 ? true : false}>
+              <IonCardContent className="card-dot card-dot__credit">
                 <IonRow className="ion-align-items-center ">
                   <IonCol size="7">
                     <IonCardSubtitle color="medium">Ahorros</IonCardSubtitle>
                     <p>
-                      <strong>$0.00</strong> COL
+                      <strong>${money}</strong> {currency}
                     </p>
                   </IonCol>
                   <IonCol size="5">
@@ -81,14 +124,14 @@ const Home: React.FC<DarkModeButtonOptions> = ({ history }) => {
             </IonCard>
           </IonCol>
           <IonCol size="6" sizeXs="12">
-            <IonCard >
-              <IonCardContent className="card-dot">
+            <IonCard disabled={account.accountType !== 2 ? true : false}>
+              <IonCardContent className="card-dot card-dot__secondary">
                 <IonRow className="ion-align-items-center ">
                   <IonCol size="7">
                     <IonCardSubtitle color="medium">Corriente</IonCardSubtitle>
                     <p>
-                      <strong>$0.00</strong> COL
-                </p>
+                      <strong>${money}</strong> {currency}
+                    </p>
                   </IonCol>
                   <IonCol size="5">
                     <span>

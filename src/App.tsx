@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
-import { Route } from 'react-router-dom';
-import { Redirect } from 'react-router';
+import { Route, Redirect, BrowserRouter } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 
 import Menu from './components/navigation/menu/Menu';
-
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -36,7 +34,7 @@ import Signup from './pages/signup/Signup';
 import Intro from './pages/intro/Intro';
 import HomeOrIntro from './components/navigation/HomeOrIntro';
 import RedirectToLogin from './components/navigation/RedirectToLogin';
-import { useAuth } from './data/helper/user.auth';
+import { logout, useAuth } from './data/helper/user.auth';
 
 const App: React.FC = () => {
   return (
@@ -92,7 +90,7 @@ const IonicApp: React.FC<IonicAppProps> = ({ darkMode, setIsLoggedIn, setUsernam
           </IonSplitPane>
         </IonReactRouter>
       </>
-        : <Redirect to="/login" />}
+        : logout() && <BrowserRouter><div><Redirect to="/login" /></div></BrowserRouter>}
     </IonApp>
   )
 }

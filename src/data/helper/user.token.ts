@@ -3,7 +3,7 @@ import { Plugins } from "@capacitor/core";
 const { Storage } = Plugins;
 
 export const createTokenProvider = () => {
-  let _token: any = localStorage.getItem("TOKEN_AUTH");
+  let _token: any = localStorage.getItem("_cap_TOKEN_AUTH");
 
   const getToken = async () => {
     if (!_token) {
