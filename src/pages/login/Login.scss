@@ -1,24 +1,34 @@
 #login-page,
 #signup-page,
 #support-page {
-  ion-toolbar {
-    text-align: center;
-    & ion-title {
-      color: var(--ion-color-primary);
-      letter-spacing: 0.12rem;
-    }
+  h1 {
+    font-size: 2.15rem;
+    margin-top: 2.8rem;
+    letter-spacing: 0.15rem;
+    color: var(--ion-color-medium);
   }
   h2 {
-    font-size: 2rem;
-    color: var(--ion-color-primary-shade);
+    font-size: 1.5rem;
+    color: var(--ion-color-primary);
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0.5rem;
+      left: 0;
+      height: 3.125rem;
+      width: 8rem;
+      border-radius: 0 1.5625rem 1.5625rem 0;
+      background: var(--ion-color-primary-shade);
+      z-index: -1;
+    }
   }
-
-
-  .login-logo img {
-    max-width: 150px;
+  .container__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0.9375rem;
   }
-
-  .list {
-    margin-bottom: 0;
+  ion-row {
+    margin: 4.6875rem 0;
   }
 }

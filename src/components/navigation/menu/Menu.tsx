@@ -1,33 +1,14 @@
 import React from 'react';
 import { RouteComponentProps, withRouter, useLocation } from 'react-router';
 
-import { IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonToggle, useIonViewWillEnter } from '@ionic/react';
-import {  hammer, moonOutline, help, logIn, logOut, person, personAdd, home, cash, informationCircle } from 'ionicons/icons';
+import { IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonToggle } from '@ionic/react';
+import { hammer, moonOutline } from 'ionicons/icons';
 
 import { connect } from '../../../data/connect';
 import { setDarkMode } from '../../../data/user/user.actions';
 
-import './Menu.css';
-import { setMenuEnabled } from '../../../data/sessions/sessions.actions';
-
-const routes = {
-  appPages: [
-    { title: 'Money', path: '/tabs/money', icon: cash },
-    { title: 'Home', path: '/tabs/home', icon: home },
-    { title: 'About', path: '/tabs/about', icon: informationCircle }
-  ],
-  loggedInPages: [
-    { title: 'Account', path: '/account', icon: person },
-    { title: 'Support', path: '/support', icon: help },
-    { title: 'Logout', path: '/logout', icon: logOut }
-  ],
-  loggedOutPages: [
-    { title: 'Login', path: '/login', icon: logIn },
-    { title: 'Support', path: '/support', icon: help },
-    { title: 'Signup', path: '/signup', icon: personAdd }
-  ]
-};
-
+import './Menu.scss';
+import routes from '../../../routes';
 interface Pages {
   title: string,
   path: string,
@@ -39,7 +20,6 @@ interface StateProps {
   isAuthenticated: boolean;
   menuEnabled: boolean;
 }
-
 interface DispatchProps {
   setDarkMode: typeof setDarkMode
 }
@@ -54,7 +34,7 @@ const Menu: React.FC<MenuProps> = ({ darkMode, history, isAuthenticated, setDark
       .filter(route => !!route.path)
       .map(p => (
         <IonMenuToggle key={p.title} auto-hide="false">
-          <IonItem detail={false} routerLink={p.path} routerDirection="none" className={location.pathname.startsWith(p.path) ? 'selected' : undefined}>
+          <IonItem detail={false} routerLink={p.path} routerDirection="none" className={`ion-margin-top ${location.pathname.startsWith(p.path) ? 'selected' : undefined}`}>
             <IonIcon slot="start" icon={p.icon} />
             <IonLabel>{p.title}</IonLabel>
           </IonItem>
@@ -66,7 +46,7 @@ const Menu: React.FC<MenuProps> = ({ darkMode, history, isAuthenticated, setDark
     <IonMenu type="overlay" disabled={!menuEnabled} contentId="main">
       <IonContent forceOverscroll={false}>
         <IonList lines="none">
-          <IonListHeader>TODO 1</IonListHeader>
+          <IonListHeader>TODO1</IonListHeader>
           {renderlistItems(routes.appPages)}
         </IonList>
         <IonList lines="none">

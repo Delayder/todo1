@@ -2,23 +2,9 @@ import { Plugins } from '@capacitor/core';
 
 const { Storage } = Plugins;
 
-const dataUrl = '/assets/data/data.json';
-const locationsUrl = '/assets/data/locations.json';
-
 const HAS_LOGGED_IN = 'hasLoggedIn';
 const HAS_SEEN_INTRO = 'hasSeenIntro';
 const USERNAME = 'username';
-
-export const getConfData = async () => {
-  const response = await Promise.all([
-    fetch(dataUrl),
-    fetch(locationsUrl)]);
-  const responseData = await response[0].json();
-
-  const data = {
-  }
-  return data;
-}
 
 export const getUserData = async () => {
   const response = await Promise.all([

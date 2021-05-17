@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonButtons, IonMenuButton, IonRow, IonCol, IonButton, IonItem, IonLabel, IonInput, IonText, useIonViewWillEnter, IonGrid } from '@ionic/react';
+import { IonContent, IonPage, IonRow, IonCol, IonButton, IonItem, IonLabel, IonInput, IonText, useIonViewWillEnter, IonGrid, useIonAlert } from '@ionic/react';
 import './Login.scss';
 import { setIsLoggedIn, setUsername } from '../../data/user/user.actions';
 import { connect } from '../../data/connect';
 import { RouteComponentProps } from 'react-router';
 import { setMenuEnabled } from '../../data/sessions/sessions.actions';
-
+import DarkMode from '../../components/buttons/DarkMode';
+import { config } from '../../config';
+import { createTokenProvider } from '../../data/helper/user.token';
+import { generateLogin } from '../../data/helper/user.auth';
 interface OwnProps extends RouteComponentProps { }
 
 interface DispatchProps {
@@ -17,6 +20,8 @@ interface DispatchProps {
 interface LoginProps extends OwnProps, DispatchProps { }
 
 const Login: React.FC<LoginProps> = ({ setIsLoggedIn, setMenuEnabled, history, setUsername: setUsernameAction }) => {
+  const [present] = useIonAlert();
+  const tokenProvider = createTokenProvider();
 
   useIonViewWillEnter(() => {
     setMenuEnabled(false);
@@ -36,72 +41,82 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn, setMenuEnabled, history, s
     if (!password) {
       setPasswordError(true);
     }
+    const URL = "http://localhost:7002";
+    const data = { username, password };
+    fetch(`${URL}/api/auth/login`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: { 'Content-Type': 'application/json' }
+    }).then(async res => {
+      const { token, message } = await res.json();
+      if (token) {
+        setUsernameAction(username);
+        //generateLogin(token);
+        setIsLoggedIn(true);
+        setMenuEnabled(true);
+        history.push('/tabs/home', { direction: 'none' });
+      } else {
+        present({
+          cssClass: 'my-css',
+          header: 'Error de inicio de sesión',
+          message: message,
+          buttons: [
+            'Ok'
+          ],
+        })
 
-    if (username && password) {
-      await setIsLoggedIn(true);
-      await setUsernameAction(username);
-      history.push('/tabs/home', { direction: 'none' });
-    }
+      }
+    })
   };
 
   return (
     <IonPage id="login-page">
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Todo 1</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent>
 
+      <IonContent fullscreen>
         <form noValidate onSubmit={login}>
+
+          <div className="container__head">
+            <h2>TODO1</h2>
+            <DarkMode slot="end"></DarkMode>
+          </div>
+
           <IonGrid>
-            <IonRow className="ion-justify-content-center ion-align-items-center">
-              <IonCol className="" size="12">
-                <h2>LOGIN</h2>
-              </IonCol>
+            <IonRow className="ion-justify-content-center ion-align-items-center ion-margin-top">
+              <h1>INICIO SESIÓN</h1>
               <IonCol size="12">
                 <IonItem>
-                  <IonLabel position="stacked" color="medium">Username</IonLabel>
+                  <IonLabel position="floating" color="medium">Alias</IonLabel>
                   <IonInput name="username" type="text" value={username} spellCheck={false} autocapitalize="off" onIonChange={e => setUsername(e.detail.value!)}
                     required>
                   </IonInput>
                 </IonItem>
                 {formSubmitted && usernameError && <IonText color="danger">
                   <p className="ion-padding-start">
-                    Username is required
+                    El Alias es requerido
               </p>
                 </IonText>}
               </IonCol>
 
               <IonCol size="12">
                 <IonItem>
-                  <IonLabel position="stacked" color="medium">Password</IonLabel>
-                  <IonInput name="password" type="password" value={password} onIonChange={e => setPassword(e.detail.value!)}>
+                  <IonLabel position="floating" color="medium">Contraseña</IonLabel>
+                  <IonInput name="password" color="primary" type="password" value={password} onIonChange={e => setPassword(e.detail.value!)}>
                   </IonInput>
                 </IonItem>
                 {formSubmitted && passwordError && <IonText color="danger">
                   <p className="ion-padding-start">
-                    Password is required
+                    La contraseña es requerida
               </p>
-                </IonText>}
+                </IonText>
+                }
               </IonCol>
 
             </IonRow>
-
-
-            <IonRow>
-              <IonCol>
-                <IonButton type="submit" expand="block">Login</IonButton>
-              </IonCol>
-              <IonCol>
-                <IonButton routerLink="/signup" color="light" expand="block">Signup</IonButton>
-              </IonCol>
-            </IonRow>
+            <IonButton type="submit" expand="block" shape="round" color="primary">Iniciar Sesión</IonButton>
+            <IonButton routerLink="/signup" color="transparent" className="ion-margin-top" fill="clear" expand="block">Crea tu cuenta!</IonButton>
           </IonGrid>
         </form>
-
       </IonContent>
-
     </IonPage>
   );
 };

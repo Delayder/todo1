@@ -1,16 +1,16 @@
 import React, { useState, useRef } from 'react';
 import { IonContent, IonPage, IonHeader, IonToolbar, IonButtons, IonButton, IonSlides, IonSlide, IonIcon, useIonViewWillEnter } from '@ionic/react';
-import { arrowForward, moonOutline } from 'ionicons/icons';
+import { arrowForward } from 'ionicons/icons';
 import { setMenuEnabled } from '../../data/sessions/sessions.actions';
-import { setDarkMode, setHasSeenIntro } from '../../data/user/user.actions';
+import {  setHasSeenIntro } from '../../data/user/user.actions';
 import './Intro.scss';
 import { connect } from '../../data/connect';
 import { RouteComponentProps } from 'react-router';
+import DarkMode from '../../components/buttons/DarkMode';
 
 interface OwnProps extends RouteComponentProps { };
 
 interface DispatchProps {
-  setDarkMode: typeof setDarkMode;
   setHasSeenIntro: typeof setHasSeenIntro;
   setMenuEnabled: typeof setMenuEnabled;
 }
@@ -20,7 +20,7 @@ interface StateProps {
 
 interface IntroProps extends OwnProps, DispatchProps, StateProps { };
 
-const Intro: React.FC<IntroProps> = ({ darkMode, history, setHasSeenIntro, setMenuEnabled, setDarkMode }) => {
+const Intro: React.FC<IntroProps> = ({ darkMode, history, setHasSeenIntro, setMenuEnabled }) => {
   const [showSkip, setShowSkip] = useState(true);
   const slideRef = useRef<HTMLIonSlidesElement>(null);
 
@@ -43,11 +43,9 @@ const Intro: React.FC<IntroProps> = ({ darkMode, history, setHasSeenIntro, setMe
       <IonHeader no-border>
         <IonToolbar>
           <IonButtons slot="start">
-            {showSkip && <IonButton color='primary' onClick={startApp}>Omitir</IonButton>}
+            {showSkip && <IonButton color='secondary' onClick={startApp}>Omitir</IonButton>}
           </IonButtons>
-          <IonButtons slot="end">
-            <IonIcon slot="start" icon={moonOutline} onClick={() => setDarkMode(!darkMode)}></IonIcon>
-          </IonButtons>
+          <DarkMode slot="end"></DarkMode>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -98,7 +96,6 @@ export default connect<OwnProps, {}, DispatchProps>({
     darkMode: state.user.darkMode
   }),
   mapDispatchToProps: ({
-    setDarkMode,
     setHasSeenIntro,
     setMenuEnabled
   }),

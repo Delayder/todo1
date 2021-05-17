@@ -1,18 +1,34 @@
-import React from 'react';
-import { connect } from '../../data/connect';
-import { Redirect } from 'react-router';
+import React, { useEffect, useState } from 'react';
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 
-interface StateProps {
-  hasSeenIntro: boolean;
+import { connect } from '../../data/connect';
+import { authFetch } from '../../data/helper/user.auth';
+
+interface DarkModeButtonOptions { };
+
+const Homes: React.FC<DarkModeButtonOptions> = () => {
+  const [account, setAccount] = useState([]);
+
+  useEffect(() => {
+    authFetch('').then(r => r.json()).then(_post => setAccount(_post));
+  })
+  return (
+    <IonPage id="home-page">
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonMenuButton></IonMenuButton>
+          </IonButtons>
+          <IonTitle>HOME</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <IonTitle>{account}</IonTitle>
+      </IonContent>
+    </IonPage>
+  )
 }
 
-const Home: React.FC<StateProps> = ({ hasSeenIntro }) => {
-  return hasSeenIntro ? <Redirect to="/tabs/home" /> : <Redirect to="/intro" />
-};
-
-export default connect<{}, StateProps, {}>({
-  mapStateToProps: (state) => ({
-    hasSeenIntro: state.user.hasSeenIntro
-  }),
-  component: Home
+export default connect<{}>({
+  component: Homes
 });

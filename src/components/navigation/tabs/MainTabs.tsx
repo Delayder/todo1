@@ -3,7 +3,8 @@ import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon } from '@ion
 import { Route, Redirect } from 'react-router';
 import { informationCircle, home, paperPlane } from 'ionicons/icons';
 import About from './about/About';
-
+import SendMoney from './sendMoney/SendMoney';
+import Home from '../../../pages/home/Home';
 interface MainTabsProps { }
 
 const MainTabs: React.FC<MainTabsProps> = () => {
@@ -16,16 +17,16 @@ const MainTabs: React.FC<MainTabsProps> = () => {
           Using the render method prop cuts down the number of renders your components will have due to route changes.
           Use the component prop when your component depends on the RouterComponentProps passed in automatically.
         */}
-        <Route path="/tabs/about" render={() => <About />} exact={true} />
-        <Route path="/tabs/about" render={() => <About />} exact={true} />
+        <Route path="/tabs/sendMoney" render={() => <SendMoney />} exact={true} />
+        <Route path="/tabs/home" render={() => <Home />} exact={true} />
         <Route path="/tabs/about" render={() => <About />} exact={true} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
-        <IonTabButton tab="about" href="/tabs/about">
+        <IonTabButton tab="sendMoney" href="/tabs/sendmoney">
           <IonIcon icon={paperPlane} />
 
         </IonTabButton>
-        <IonTabButton tab="about" href="/tabs/about">
+        <IonTabButton tab="home" href="/tabs/home">
           <IonIcon icon={home} />
 
         </IonTabButton>
