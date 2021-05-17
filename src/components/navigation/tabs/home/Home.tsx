@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 
-import { connect } from '../../data/connect';
-import { authFetch } from '../../data/helper/user.auth';
+import { connect } from '../../../../data/connect';
+import { authFetch } from '../../../../data/helper/user.auth';
 
 interface DarkModeButtonOptions { };
 

@@ -4,7 +4,7 @@ import { Route, Redirect } from 'react-router';
 import { informationCircle, home, paperPlane } from 'ionicons/icons';
 import About from './about/About';
 import SendMoney from './sendMoney/SendMoney';
-import Home from '../../../pages/home/Home';
+import Home from './home/Home';
 interface MainTabsProps { }
 
 const MainTabs: React.FC<MainTabsProps> = () => {

@@ -10,6 +10,7 @@ const createAuthProvider = () => {
 
   const logout = () => {
     tokenProvider.setToken({ accessToken: "" });
+
   };
 
   const authFetch = async (

@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { IonContent, IonPage, IonHeader, IonToolbar, IonButtons, IonButton, IonSlides, IonSlide, IonIcon, useIonViewWillEnter } from '@ionic/react';
 import { arrowForward } from 'ionicons/icons';
 import { setMenuEnabled } from '../../data/sessions/sessions.actions';
-import {  setHasSeenIntro } from '../../data/user/user.actions';
+import { setHasSeenIntro } from '../../data/user/user.actions';
 import './Intro.scss';
 import { connect } from '../../data/connect';
 import { RouteComponentProps } from 'react-router';
@@ -15,12 +15,12 @@ interface DispatchProps {
   setMenuEnabled: typeof setMenuEnabled;
 }
 interface StateProps {
-  darkMode: boolean;
+  hasSeenIntro: boolean;
 }
 
 interface IntroProps extends OwnProps, DispatchProps, StateProps { };
 
-const Intro: React.FC<IntroProps> = ({ darkMode, history, setHasSeenIntro, setMenuEnabled }) => {
+const Intro: React.FC<IntroProps> = ({ history, hasSeenIntro, setHasSeenIntro, setMenuEnabled }) => {
   const [showSkip, setShowSkip] = useState(true);
   const slideRef = useRef<HTMLIonSlidesElement>(null);
 
@@ -29,9 +29,14 @@ const Intro: React.FC<IntroProps> = ({ darkMode, history, setHasSeenIntro, setMe
   });
 
   const startApp = async () => {
+    if (hasSeenIntro) {
+      history.push('/tabs/home', { direction: 'none' })
+    }
+    else {
+      history.push('/login', { direction: 'none' });
+    }
     await setHasSeenIntro(true);
     await setMenuEnabled(true);
-    history.push('/login', { direction: 'none' });
   };
 
   const handleSlideChangeStart = () => {
@@ -93,7 +98,7 @@ const Intro: React.FC<IntroProps> = ({ darkMode, history, setHasSeenIntro, setMe
 
 export default connect<OwnProps, {}, DispatchProps>({
   mapStateToProps: (state) => ({
-    darkMode: state.user.darkMode
+    hasSeenIntro: state.user.hasSeenIntro
   }),
   mapDispatchToProps: ({
     setHasSeenIntro,
