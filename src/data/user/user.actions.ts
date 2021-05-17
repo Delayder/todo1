@@ -1,7 +1,7 @@
-import { getUserData, setIsLoggedInData, setUsernameData, setHasSeenIntroData } from '../dataApi';
-import { ActionType } from '../../util/types';
-import { UserState } from './user.state';
 
+import { ActionType } from '../../util/types';
+import { getUserData, setHasSeenIntroData, setIsLoggedInData, setUsernameData } from '../helper/user.auth';
+import { UserState } from './user.state';
 
 export const loadUserData = () => async (dispatch: React.Dispatch<any>) => {
   dispatch(setLoading(true));

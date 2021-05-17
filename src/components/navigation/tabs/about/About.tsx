@@ -6,16 +6,17 @@ interface AboutProps { }
 
 const About: React.FC<AboutProps> = () => {
 
+
   const [location, setLocation] = useState<'madison' | 'austin' | 'chicago' | 'seattle'>('madison');
-  const [conferenceDate, setConferenceDate] = useState('2047-05-17T00:00:00-05:00');
+  const [aboutDate, setaboutDate] = useState('2020-05-17T00:00:00-05:00');
 
   const selectOptions = {
-    header: 'Select a Location'
+    header: 'Selecciona una sucursal'
   };
 
   // momentjs would be a better way to do this https://momentjs.com/
   function displayDate(date: string, format: string) {
-    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
     const d = new Date(date);
     const year = d.getFullYear();
@@ -55,12 +56,12 @@ const About: React.FC<AboutProps> = () => {
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime expedita ut iusto, dicta fugit libero autem, id incidunt quasi harum nulla consequatur. Iste nostrum accusantium hic et ipsa laboriosam fuga.
           </p>
 
-          <h3 className="ion-padding-top ion-padding-start">Details</h3>
+          <h3 className="ion-padding-top ion-padding-start">Detalles</h3>
 
           <IonList lines="none">
             <IonItem>
               <IonLabel>
-                Location
+                Localidades
               </IonLabel>
               <IonSelect value={location} interfaceOptions={selectOptions} onIonChange={(e) => setLocation(e.detail.value as any)}>
                 <IonSelectOption value="madison">Madison, WI</IonSelectOption>
@@ -71,13 +72,13 @@ const About: React.FC<AboutProps> = () => {
             </IonItem>
             <IonItem>
               <IonLabel>
-                Date
+                Fecha
               </IonLabel>
               <IonDatetime
                 displayFormat="MMM DD, YYYY"
                 max="2056"
-                value={conferenceDate}
-                onIonChange={(e) => setConferenceDate(e.detail.value as any)}>
+                value={aboutDate}
+                onIonChange={(e) => setaboutDate(e.detail.value as any)}>
               </IonDatetime>
             </IonItem>
           </IonList>

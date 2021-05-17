@@ -44,30 +44,33 @@ const Menu: React.FC<MenuProps> = ({ darkMode, history, isAuthenticated, setDark
 
   return (
     <IonMenu type="overlay" disabled={!menuEnabled} contentId="main">
-      <IonContent forceOverscroll={false}>
-        <IonList lines="none">
-          <IonListHeader>TODO1</IonListHeader>
-          {renderlistItems(routes.appPages)}
-        </IonList>
-        <IonList lines="none">
-          <IonListHeader>Account</IonListHeader>
-          {isAuthenticated ? renderlistItems(routes.loggedInPages) : renderlistItems(routes.loggedOutPages)}
-          <IonItem>
-            <IonIcon slot="start" icon={moonOutline}></IonIcon>
-            <IonLabel>Dark Mode</IonLabel>
-            <IonToggle checked={darkMode} onClick={() => setDarkMode(!darkMode)} />
-          </IonItem>
-        </IonList>
-        <IonList lines="none">
-          <IonListHeader>Intro</IonListHeader>
-          <IonItem button onClick={() => {
-            history.push('/intro');
-          }}>
-            <IonIcon slot="start" icon={hammer} />
+      {isAuthenticated && <>
+        <IonContent forceOverscroll={false}>
+          <IonList lines="none">
+            <IonListHeader>TODO1</IonListHeader>
+            {renderlistItems(routes.appPages)}
+          </IonList>
+          <IonList lines="none">
+            <IonListHeader>Account</IonListHeader>
+            {renderlistItems(routes.loggedInPages)}
+            <IonItem className="ion-margin-top">
+              <IonIcon slot="start"  icon={moonOutline}></IonIcon>
+              <IonLabel>Dark Mode</IonLabel>
+              <IonToggle checked={darkMode} onClick={() => setDarkMode(!darkMode)} />
+            </IonItem>
+          </IonList>
+          <IonList lines="none">
+            <IonListHeader>Intro</IonListHeader>
+            <IonItem button onClick={() => {
+              history.push('/intro');
+            }}>
+              <IonIcon slot="start" icon={hammer} />
             Show Intro
           </IonItem>
-        </IonList>
-      </IonContent>
+          </IonList>
+        </IonContent>
+      </>
+      }
     </IonMenu>
   );
 };
